@@ -22,33 +22,16 @@ export function About() {
         <div className="section-line" />
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '4rem', alignItems: 'center' }}>
-        {/* text */}
+      {/* two-column: text | skills — top aligned */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '4rem', alignItems: 'start' }}>
         <div className="reveal">
           {a.paragraphs.map((para, i) => (
             <p key={i} style={{ color: 'var(--muted2)', fontSize: '0.95rem', lineHeight: 1.8, marginBottom: '1rem' }}>
               {para[lang]}
             </p>
           ))}
-          <br />
-          <a
-            href="/cv.pdf"
-            download
-            style={{
-              display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
-              padding: '0.65rem 1.4rem', border: '1px solid var(--border)',
-              color: 'var(--muted2)', fontSize: '0.8rem', fontWeight: 500,
-              borderRadius: 6, textDecoration: 'none',
-              transition: 'border-color 0.2s, color 0.2s, box-shadow 0.2s',
-            }}
-            onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--accent)'; e.currentTarget.style.color = 'var(--accent)'; e.currentTarget.style.boxShadow = '0 0 16px var(--accent-glow)' }}
-            onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--muted2)'; e.currentTarget.style.boxShadow = '' }}
-          >
-            ↓ {a.cvBtn[lang]}
-          </a>
         </div>
 
-        {/* skills grid */}
         <div className="reveal reveal-delay-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.6rem' }}>
           {a.skills.map((skill, i) => (
             <div
@@ -68,6 +51,25 @@ export function About() {
             </div>
           ))}
         </div>
+      </div>
+
+      {/* CV button — centered below both columns */}
+      <div className="reveal" style={{ display: 'flex', justifyContent: 'center', marginTop: '3rem' }}>
+        <a
+          href="/cv.pdf"
+          download
+          style={{
+            display: 'inline-flex', alignItems: 'center', gap: '0.6rem',
+            padding: '0.85rem 2rem', border: '1px solid var(--border)',
+            color: 'var(--muted2)', fontSize: '0.95rem', fontWeight: 500,
+            borderRadius: 8, textDecoration: 'none',
+            transition: 'border-color 0.2s, color 0.2s, box-shadow 0.2s',
+          }}
+          onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--accent)'; e.currentTarget.style.color = 'var(--accent)'; e.currentTarget.style.boxShadow = '0 0 20px var(--accent-glow)' }}
+          onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--muted2)'; e.currentTarget.style.boxShadow = '' }}
+        >
+          ↓ {a.cvBtn[lang]}
+        </a>
       </div>
     </section>
   )

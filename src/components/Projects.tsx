@@ -3,32 +3,15 @@ import { content } from '@/data/content'
 import { Link } from 'react-router-dom'
 
 const GH_SVG = (
-  <svg width="13" height="13" fill="currentColor" viewBox="0 0 24 24">
+  <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
     <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
   </svg>
 )
 
-function TiltCard({ children, delay }: { children: React.ReactNode; delay?: number }) {
-  const handleMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const el = e.currentTarget
-    const r = el.getBoundingClientRect()
-    const cx = e.clientX - r.left
-    const cy = e.clientY - r.top
-    el.style.setProperty('--cx', cx + 'px')
-    el.style.setProperty('--cy', cy + 'px')
-    const nx = (cx / r.width  - 0.5) * 2
-    const ny = (cy / r.height - 0.5) * 2
-    el.style.transform = `perspective(700px) rotateY(${nx * 8}deg) rotateX(${-ny * 6}deg) scale(1.02)`
-  }
-  const handleLeave = (e: React.MouseEvent<HTMLDivElement>) => {
-    e.currentTarget.style.transform = ''
-  }
-
+function Card({ children, delay }: { children: React.ReactNode; delay?: number }) {
   return (
     <div
       className={`tilt-card reveal${delay ? ` reveal-delay-${delay}` : ''}`}
-      onMouseMove={handleMove}
-      onMouseLeave={handleLeave}
       style={{
         background: 'var(--bg2)',
         border: '1px solid var(--border)',
@@ -36,21 +19,14 @@ function TiltCard({ children, delay }: { children: React.ReactNode; delay?: numb
         padding: '1.75rem',
         position: 'relative',
         overflow: 'hidden',
-        transition: 'box-shadow 0.3s, border-color 0.3s',
-        transformStyle: 'preserve-3d',
+        transition: 'border-color 0.3s, box-shadow 0.3s',
+        display: 'flex',
+        flexDirection: 'column',
       }}
+      onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(251,191,36,0.25)'; e.currentTarget.style.boxShadow = '0 8px 32px rgba(0,0,0,0.4)' }}
+      onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.boxShadow = '' }}
     >
-      {/* inner spotlight via pseudo — handled via CSS in parent; replicated inline */}
-      <div
-        style={{
-          position: 'absolute', inset: 0, borderRadius: 12,
-          background: 'radial-gradient(280px circle at var(--cx,50%) var(--cy,50%), rgba(251,191,36,0.07) 0%, transparent 70%)',
-          pointerEvents: 'none', zIndex: 0,
-        }}
-      />
-      <div style={{ position: 'relative', zIndex: 1, height: '100%', display: 'flex', flexDirection: 'column' }}>
-        {children}
-      </div>
+      {children}
     </div>
   )
 }
@@ -72,54 +48,42 @@ export function Projects() {
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '1.5rem' }}>
         {p.items.map((item, i) => (
-          <TiltCard key={item.monogram} delay={(i + 1) as 1 | 2 | 3 | 4}>
-            {/* top row */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem' }}>
-              <div style={{
-                width: 40, height: 40, background: 'var(--bg3)',
-                border: '1px solid var(--border)', borderRadius: 8,
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontFamily: "'JetBrains Mono', monospace", fontSize: '0.7rem',
-                color: 'var(--accent)', fontWeight: 500, letterSpacing: '0.04em',
-              }}>
-                {item.monogram}
-              </div>
-              <div style={{ display: 'flex', gap: '0.4rem', alignItems: 'center' }}>
-                {/* GitHub */}
-                <a
-                  href={item.github}
-                  target="_blank"
-                  rel="noreferrer"
-                  title="GitHub"
-                  style={{
-                    width: 30, height: 30, background: 'var(--bg3)',
-                    border: '1px solid var(--border)', borderRadius: 6,
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    textDecoration: 'none', color: 'var(--muted)',
-                    transition: 'color 0.2s, border-color 0.2s',
-                  }}
-                  onMouseEnter={e => { e.currentTarget.style.color = 'var(--accent)'; e.currentTarget.style.borderColor = 'var(--accent)' }}
-                  onMouseLeave={e => { e.currentTarget.style.color = 'var(--muted)'; e.currentTarget.style.borderColor = 'var(--border)' }}
-                >
-                  {GH_SVG}
-                </a>
-                {/* Demo */}
-                <Link
-                  to={item.demo}
-                  style={{
-                    display: 'inline-flex', alignItems: 'center', gap: '0.3rem',
-                    padding: '0 0.7rem', height: 30,
-                    background: 'var(--accent-tag)', border: '1px solid var(--accent-tag-b)',
-                    borderRadius: 6, fontSize: '0.68rem', fontWeight: 600,
-                    color: 'var(--accent)', textDecoration: 'none', whiteSpace: 'nowrap',
-                    transition: 'background 0.2s, box-shadow 0.2s',
-                  }}
-                  onMouseEnter={e => { e.currentTarget.style.background = 'rgba(251,191,36,0.18)'; e.currentTarget.style.boxShadow = '0 0 12px var(--accent-glow)' }}
-                  onMouseLeave={e => { e.currentTarget.style.background = 'var(--accent-tag)'; e.currentTarget.style.boxShadow = '' }}
-                >
-                  {p.demoBtn[lang]}
-                </Link>
-              </div>
+          <Card key={item.monogram} delay={(i + 1) as 1 | 2 | 3 | 4}>
+            {/* top row: GitHub left, See Demo right */}
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
+              <a
+                href={item.github}
+                target="_blank"
+                rel="noreferrer"
+                title="GitHub"
+                style={{
+                  width: 36, height: 36, background: 'var(--bg3)',
+                  border: '1px solid var(--border)', borderRadius: 8,
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  textDecoration: 'none', color: 'var(--muted)',
+                  transition: 'color 0.2s, border-color 0.2s',
+                }}
+                onMouseEnter={e => { e.currentTarget.style.color = 'var(--accent)'; e.currentTarget.style.borderColor = 'var(--accent)' }}
+                onMouseLeave={e => { e.currentTarget.style.color = 'var(--muted)'; e.currentTarget.style.borderColor = 'var(--border)' }}
+              >
+                {GH_SVG}
+              </a>
+
+              <Link
+                to={item.demo}
+                style={{
+                  display: 'inline-flex', alignItems: 'center', gap: '0.3rem',
+                  padding: '0 0.9rem', height: 34,
+                  background: 'var(--accent-tag)', border: '1px solid var(--accent-tag-b)',
+                  borderRadius: 6, fontSize: '0.78rem', fontWeight: 600,
+                  color: 'var(--accent)', textDecoration: 'none', whiteSpace: 'nowrap',
+                  transition: 'background 0.2s, box-shadow 0.2s',
+                }}
+                onMouseEnter={e => { e.currentTarget.style.background = 'rgba(251,191,36,0.18)'; e.currentTarget.style.boxShadow = '0 0 12px var(--accent-glow)' }}
+                onMouseLeave={e => { e.currentTarget.style.background = 'var(--accent-tag)'; e.currentTarget.style.boxShadow = '' }}
+              >
+                {p.demoBtn[lang]}
+              </Link>
             </div>
 
             {/* status */}
@@ -135,7 +99,7 @@ export function Projects() {
             <h3 style={{ fontSize: '1.05rem', fontWeight: 600, color: '#fdf6ea', marginBottom: '0.4rem' }}>{item.name}</h3>
             <p style={{ fontSize: '0.83rem', color: 'var(--muted)', lineHeight: 1.65, marginBottom: '1.2rem', flex: 1 }}>{item.desc[lang]}</p>
 
-            {/* tags */}
+            {/* tags — uniform style */}
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', marginTop: 'auto' }}>
               {item.tags.map(tag => (
                 <span
@@ -143,17 +107,17 @@ export function Projects() {
                   style={{
                     fontFamily: "'JetBrains Mono', monospace",
                     fontSize: '0.68rem', padding: '0.2rem 0.55rem',
-                    background: 'accent' in tag && tag.accent ? 'var(--accent-tag)' : 'var(--bg3)',
-                    border: `1px solid ${'accent' in tag && tag.accent ? 'var(--accent-tag-b)' : 'var(--border)'}`,
+                    background: 'var(--bg3)',
+                    border: '1px solid var(--border)',
                     borderRadius: 4,
-                    color: 'accent' in tag && tag.accent ? 'var(--accent)' : 'var(--muted2)',
+                    color: 'var(--muted2)',
                   }}
                 >
                   {tag.label}
                 </span>
               ))}
             </div>
-          </TiltCard>
+          </Card>
         ))}
 
         {/* placeholder */}
@@ -166,7 +130,7 @@ export function Projects() {
             color: 'var(--muted)', fontSize: '0.82rem', minHeight: 200,
           }}
         >
-          <span style={{ fontSize: '1.3rem', color: 'var(--muted)' }}>+</span>
+          <span style={{ fontSize: '1.3rem' }}>+</span>
           {p.moreSoon[lang]}
         </div>
       </div>
