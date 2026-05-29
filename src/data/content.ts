@@ -22,7 +22,7 @@ export const content = {
     },
     bio: {
       en: "I build tools and systems around data, AI, and workflow design, with a focus on evaluation and making things work better than they did before. When I'm not building, you'll usually find me out on a trail soaking in the quiet of nature, putting up shots on a basketball court, or occasionally unwinding with video games.",
-      tr: 'TR — coming soon',
+      tr: "Veri, yapay zeka ve iş akışı tasarımı etrafında araçlar ve sistemler inşa ediyorum; değerlendirmeye ve işleri öncekinden daha iyi hale getirmeye odaklanıyorum. İnşa etmediğim zamanlarda beni genellikle doğanın sessizliğine dalmış bir patikada, basketbol sahasında şut çalışırken ya da ara sıra video oyunları oynarken bulabilirsiniz.",
     },
     ctaPrimary: { en: 'View Projects ↓', tr: 'Projeleri Gör ↓' },
     ctaGhost:   { en: 'Get in Touch',    tr: 'İletişime Geç'   },
@@ -41,7 +41,7 @@ export const content = {
         name: 'CHEXOT',
         desc: {
           en: 'Extracts structured data from invoice PDFs using the Claude API, with a Flask backend and React frontend. Includes a human-in-the-loop review layer, quality gates to catch extraction errors, and Excel export for downstream use.',
-          tr: 'TR — coming soon',
+          tr: 'Claude API kullanarak fatura PDF\'lerinden yapılandırılmış veri çıkaran Flask backend ve React frontend\'e sahip bir sistem. Çıkarma hatalarını yakalamak için kalite kontrol katmanı, insan denetimli gözden geçirme aşaması ve aşağı akış kullanımı için Excel dışa aktarımı içerir.',
         },
         github: 'https://github.com/efeAltan1/Chexot',
         demo: '/projects/chexot',
@@ -81,7 +81,7 @@ export const content = {
         name: '30 Days of Python',
         desc: {
           en: 'A 30-day Python challenge with one fully documented project per day. Covers core fundamentals, data structures, OOP, file I/O, databases, regex, OS, and APIs.',
-          tr: 'TR — coming soon',
+          tr: 'Günde bir tam dokümanlı proje içeren 30 günlük Python meydan okuması. Temel kavramlar, veri yapıları, OOP, dosya G/Ç, veritabanları, regex, işletim sistemi ve API\'leri kapsar.',
         },
         github: 'https://github.com/efeAltan1',
         demo: '/projects/30daypython',
@@ -126,7 +126,7 @@ export const content = {
 
   contact: {
     heading:  { en: "Let's talk.", tr: 'Konuşalım.' },
-    subtitle: { en: "I'm always down to talk ideas, brainstorm a collaboration, or just meet new people in the space. Get in touch and let's figure out how we can work together.", tr: 'TR — coming soon' },
+    subtitle: { en: "I'm always down to talk ideas, brainstorm a collaboration, or just meet new people in the space. Get in touch and let's figure out how we can work together.", tr: "Fikirler hakkında konuşmaya, bir iş birliği beyin fırtınası yapmaya ya da bu alanda yeni insanlarla tanışmaya her zaman açığım. İletişime geçin ve birlikte nasıl çalışabileceğimizi çözelim." },
     email:    'y.efealtan@gmail.com',
     github:   'https://github.com/efeAltan1',
   },
