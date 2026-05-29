@@ -1,8 +1,6 @@
-import { useLang } from '@/context/LangContext'
 import { content } from '@/data/content'
 
 export function Footer() {
-  const { lang } = useLang()
   const f = content.footer
 
   return (
@@ -16,9 +14,6 @@ export function Footer() {
     >
       <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.7rem', color: 'var(--muted)' }}>
         {f.copy}
-      </span>
-      <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.7rem', color: 'var(--muted)' }}>
-        {f.built[lang]}
       </span>
     </footer>
   )

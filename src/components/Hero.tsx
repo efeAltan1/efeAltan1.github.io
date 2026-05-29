@@ -110,8 +110,7 @@ export function Hero() {
           {h.name}
         </h1>
 
-        <p style={{ fontSize: 'clamp(1.1rem,2.5vw,1.55rem)', fontWeight: 300, color: 'var(--muted2)', marginBottom: '1.5rem' }}>
-          <span style={{ color: 'var(--accent)', fontWeight: 500 }}>{h.subtitlePrefix[lang]}</span>
+        <p style={{ fontSize: 'clamp(1.1rem,2.5vw,1.55rem)', fontWeight: 500, color: 'var(--accent)', marginBottom: '1.5rem' }}>
           <span id="tw" ref={twRef} />
         </p>
 
