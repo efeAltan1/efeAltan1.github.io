@@ -125,8 +125,8 @@ export const content = {
   },
 
   contact: {
-    heading:  { en: "Let's talk.", tr: 'Konuşalım.'                                                              },
-    subtitle: { en: "Whether it's a project, a collaboration, or just a conversation — my inbox is open.", tr: 'Bir proje, iş birliği veya sadece bir sohbet olsun — mesajlarınıza açığım.' },
+    heading:  { en: "Let's talk.", tr: 'Konuşalım.' },
+    subtitle: { en: "I'm always down to talk ideas, brainstorm a collaboration, or just meet new people in the space. Get in touch and let's figure out how we can work together.", tr: 'TR — coming soon' },
     email:    'y.efealtan@gmail.com',
     github:   'https://github.com/efeAltan1',
   },
