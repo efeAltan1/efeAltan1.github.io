@@ -32,7 +32,8 @@ export function About() {
           ))}
           <br />
           <a
-            href="#"
+            href="/cv.pdf"
+            download
             style={{
               display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
               padding: '0.65rem 1.4rem', border: '1px solid var(--border)',
@@ -43,7 +44,7 @@ export function About() {
             onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--accent)'; e.currentTarget.style.color = 'var(--accent)'; e.currentTarget.style.boxShadow = '0 0 16px var(--accent-glow)' }}
             onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--muted2)'; e.currentTarget.style.boxShadow = '' }}
           >
-            {a.cvBtn[lang]}
+            ↓ {a.cvBtn[lang]}
           </a>
         </div>
 
