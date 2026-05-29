@@ -57,7 +57,7 @@ export function About() {
       <div className="reveal" style={{ display: 'flex', justifyContent: 'center', marginTop: '3rem' }}>
         <a
           href="/cv.pdf"
-          download
+          download="YAGIZ_EFE_ALTAN_CV"
           style={{
             display: 'inline-flex', alignItems: 'center', gap: '0.6rem',
             padding: '0.85rem 2rem', border: '1px solid var(--border)',

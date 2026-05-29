@@ -13,12 +13,9 @@ export function Nav() {
         borderBottom: '1px solid var(--border)',
       }}
     >
-      <a
-        href="#hero"
-        style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.88rem', color: 'var(--accent)', letterSpacing: '0.05em', textDecoration: 'none' }}
-      >
+      <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.88rem', color: 'var(--accent)', letterSpacing: '0.05em' }}>
         efe.dev
-      </a>
+      </span>
 
       <div className="lang-toggle">
         <button className={`lang-btn${lang === 'en' ? ' active' : ''}`} onClick={() => setLang('en')}>EN</button>

@@ -119,26 +119,22 @@ export function Hero() {
         </p>
 
         <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center' }}>
-          <MagBtn>
-            <a
-              href="#projects"
-              style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.65rem 1.4rem', background: 'var(--accent)', color: '#0c0905', fontSize: '0.85rem', fontWeight: 700, borderRadius: 6, textDecoration: 'none', transition: 'box-shadow 0.25s' }}
-              onMouseEnter={e => (e.currentTarget.style.boxShadow = '0 0 28px rgba(251,191,36,0.4)')}
-              onMouseLeave={e => (e.currentTarget.style.boxShadow = '')}
-            >
-              {h.ctaPrimary[lang]}
-            </a>
-          </MagBtn>
-          <MagBtn>
-            <a
-              href="#contact"
-              style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.65rem 1.4rem', border: '1px solid var(--border)', color: 'var(--muted2)', fontSize: '0.85rem', fontWeight: 500, borderRadius: 6, textDecoration: 'none', transition: 'border-color 0.2s, color 0.2s, box-shadow 0.2s' }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--accent)'; e.currentTarget.style.color = 'var(--accent)'; e.currentTarget.style.boxShadow = '0 0 16px var(--accent-glow)' }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--muted2)'; e.currentTarget.style.boxShadow = '' }}
-            >
-              {h.ctaGhost[lang]}
-            </a>
-          </MagBtn>
+          <a
+            href="#projects"
+            style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.65rem 1.4rem', background: 'var(--accent)', color: '#0c0905', fontSize: '0.85rem', fontWeight: 700, borderRadius: 6, textDecoration: 'none', transition: 'box-shadow 0.25s' }}
+            onMouseEnter={e => (e.currentTarget.style.boxShadow = '0 0 28px rgba(251,191,36,0.4)')}
+            onMouseLeave={e => (e.currentTarget.style.boxShadow = '')}
+          >
+            {h.ctaPrimary[lang]}
+          </a>
+          <a
+            href="#contact"
+            style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.65rem 1.4rem', border: '1px solid var(--border)', color: 'var(--muted2)', fontSize: '0.85rem', fontWeight: 500, borderRadius: 6, textDecoration: 'none', transition: 'border-color 0.2s, color 0.2s, box-shadow 0.2s' }}
+            onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--accent)'; e.currentTarget.style.color = 'var(--accent)'; e.currentTarget.style.boxShadow = '0 0 16px var(--accent-glow)' }}
+            onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--muted2)'; e.currentTarget.style.boxShadow = '' }}
+          >
+            {h.ctaGhost[lang]}
+          </a>
         </div>
       </div>
 
@@ -151,20 +147,3 @@ export function Hero() {
   )
 }
 
-function MagBtn({ children }: { children: React.ReactNode }) {
-  const ref = useRef<HTMLDivElement>(null)
-  const inner = useRef<HTMLAnchorElement | null>(null)
-
-  const onMove = (e: React.MouseEvent) => {
-    const el = ref.current
-    if (!el) return
-    const r = el.getBoundingClientRect()
-    const btn = el.querySelector('a') as HTMLAnchorElement | null
-    if (!btn) return
-    inner.current = btn
-    btn.style.transform = `translate(${((e.clientX - r.left) / r.width - 0.5) * 16}px,${((e.clientY - r.top) / r.height - 0.5) * 16}px)`
-  }
-  const onLeave = () => { if (inner.current) inner.current.style.transform = '' }
-
-  return <div ref={ref} onMouseMove={onMove} onMouseLeave={onLeave}>{children}</div>
-}
