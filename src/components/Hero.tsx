@@ -88,9 +88,9 @@ export function Hero() {
     <section
       id="hero"
       style={{
-        minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center',
+        minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center',
         padding: '0 clamp(1.5rem,8vw,10rem)', paddingTop: '60px',
-        position: 'relative', overflow: 'hidden',
+        position: 'relative', overflow: 'hidden', textAlign: 'center',
       }}
     >
       {/* backgrounds */}
@@ -119,7 +119,7 @@ export function Hero() {
           {h.bio[lang]}
         </p>
 
-        <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center' }}>
           <MagBtn>
             <a
               href="#projects"
