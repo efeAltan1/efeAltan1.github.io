@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
@@ -18,24 +17,11 @@ const GH_SVG = (
 export default function ProjectDetail() {
   const { slug } = useParams<{ slug: string }>()
   const { lang } = useLang()
-  const [readme, setReadme] = useState<string | null>(null)
-  const [readmeLoading, setReadmeLoading] = useState(true)
-  const [readmeError, setReadmeError] = useState(false)
 
   useScrollProgress()
 
   const project = content.projects.items.find(p => p.demo === `/projects/${slug}`)
   const detail = slug ? projectDetails[slug] : null
-
-  useEffect(() => {
-    if (!detail?.readmeUrl) { setReadmeLoading(false); return }
-    setReadmeLoading(true)
-    setReadmeError(false)
-    fetch(detail.readmeUrl)
-      .then(r => { if (!r.ok) throw new Error('not found'); return r.text() })
-      .then(text => { setReadme(text); setReadmeLoading(false) })
-      .catch(() => { setReadmeError(true); setReadmeLoading(false) })
-  }, [detail?.readmeUrl])
 
   if (!project) {
     return (
@@ -72,7 +58,6 @@ export default function ProjectDetail() {
           </Link>
 
           <div style={{ display: 'flex', alignItems: 'flex-start', gap: '1.25rem', flexWrap: 'wrap' }}>
-            {/* monogram */}
             <div style={{
               width: 56, height: 56, background: 'var(--bg3)',
               border: '1px solid var(--border)', borderRadius: 10,
@@ -84,7 +69,6 @@ export default function ProjectDetail() {
             </div>
 
             <div style={{ flex: 1 }}>
-              {/* status */}
               <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.7rem', color: 'var(--muted)', marginBottom: '0.4rem' }}>
                 <span style={{
                   width: 6, height: 6, borderRadius: '50%',
@@ -103,35 +87,29 @@ export default function ProjectDetail() {
                 {project.desc[lang]}
               </p>
 
-              {/* tags */}
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', marginBottom: '1.5rem' }}>
                 {project.tags.map(tag => (
                   <span key={tag.label} style={{
                     fontFamily: "'JetBrains Mono', monospace",
                     fontSize: '0.68rem', padding: '0.2rem 0.55rem',
-                    background: 'accent' in tag && tag.accent ? 'var(--accent-tag)' : 'var(--bg3)',
-                    border: `1px solid ${'accent' in tag && tag.accent ? 'var(--accent-tag-b)' : 'var(--border)'}`,
-                    borderRadius: 4,
-                    color: 'accent' in tag && tag.accent ? 'var(--accent)' : 'var(--muted2)',
+                    background: 'var(--bg3)', border: '1px solid var(--border)',
+                    borderRadius: 4, color: 'var(--muted2)',
                   }}>
                     {tag.label}
                   </span>
                 ))}
               </div>
 
-              {/* links */}
-              <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
-                <a
-                  href={project.github}
-                  target="_blank"
-                  rel="noreferrer"
-                  style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.55rem 1.1rem', border: '1px solid var(--border)', borderRadius: 6, color: 'var(--muted2)', fontSize: '0.82rem', textDecoration: 'none', transition: 'border-color 0.2s, color 0.2s' }}
-                  onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--accent)'; e.currentTarget.style.color = 'var(--accent)' }}
-                  onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--muted2)' }}
-                >
-                  {GH_SVG} View on GitHub
-                </a>
-              </div>
+              <a
+                href={project.github}
+                target="_blank"
+                rel="noreferrer"
+                style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.55rem 1.1rem', border: '1px solid var(--border)', borderRadius: 6, color: 'var(--muted2)', fontSize: '0.82rem', textDecoration: 'none', transition: 'border-color 0.2s, color 0.2s' }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--accent)'; e.currentTarget.style.color = 'var(--accent)' }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--muted2)' }}
+              >
+                {GH_SVG} View on GitHub
+              </a>
             </div>
           </div>
         </div>
@@ -144,42 +122,36 @@ export default function ProjectDetail() {
               alt={`${project.name} demo`}
               style={{ width: '100%', maxHeight: 520, objectFit: 'cover', borderRadius: 12, border: '1px solid var(--border)', display: 'block' }}
             />
-          ) : (
-            <div style={{
-              width: '100%', height: 420, borderRadius: 12,
-              border: '2px dashed var(--border)',
-              display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-              gap: '0.75rem', color: 'var(--muted)',
-              background: 'var(--bg2)',
-            }}>
-              <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.75rem', letterSpacing: '0.08em' }}>GIF COMING SOON</span>
-              <span style={{ fontSize: '0.78rem' }}>Drop your demo GIF into <code style={{ fontFamily: "'JetBrains Mono', monospace", color: 'var(--accent)', fontSize: '0.72rem' }}>src/data/projects.ts → gifUrl</code></span>
-            </div>
-          )}
+          ) : detail?.previewImage ? (
+              <img
+                src={detail.previewImage}
+                alt={`${project.name} preview`}
+                style={{ width: '100%', borderRadius: 12, border: '1px solid var(--border)', display: 'block' }}
+              />
+            ) : (
+              <div style={{
+                width: '100%', height: 420, borderRadius: 12,
+                border: '2px dashed var(--border)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                color: 'var(--muted)', background: 'var(--bg2)',
+              }}>
+                <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.75rem', letterSpacing: '0.08em' }}>GIF COMING SOON</span>
+              </div>
+            )}
         </div>
 
-        {/* ── README SECTION ── */}
+        {/* ── ABOUT SECTION ── */}
         <div style={{ padding: '0 clamp(1.5rem,8vw,10rem) 6rem' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '2rem' }}>
             <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.72rem', color: 'var(--accent)', letterSpacing: '0.1em' }}>03 //</span>
-            <h2 style={{ fontSize: '1.3rem', fontWeight: 600, color: '#fdf6ea' }}>README</h2>
+            <h2 style={{ fontSize: '1.3rem', fontWeight: 600, color: '#fdf6ea' }}>About</h2>
             <div style={{ flex: 1, height: 1, background: 'var(--border)', maxWidth: 200 }} />
           </div>
 
           <div style={{ background: 'var(--bg2)', border: '1px solid var(--border)', borderRadius: 12, padding: '2.5rem clamp(1.5rem,4vw,3rem)' }}>
-            {readmeLoading && (
-              <p style={{ color: 'var(--muted)', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.8rem' }}>Loading README…</p>
-            )}
-            {readmeError && (
-              <p style={{ color: 'var(--muted)', fontSize: '0.88rem' }}>
-                README not found. Update the URL in <code style={{ fontFamily: "'JetBrains Mono', monospace", color: 'var(--accent)', fontSize: '0.8rem' }}>src/data/projects.ts</code>.
-              </p>
-            )}
-            {readme && (
-              <div className="readme-body">
-                <ReactMarkdown remarkPlugins={[remarkGfm]}>{readme}</ReactMarkdown>
-              </div>
-            )}
+            <div className="readme-body">
+              <ReactMarkdown remarkPlugins={[remarkGfm]}>{detail?.about ?? 'Coming soon.'}</ReactMarkdown>
+            </div>
           </div>
         </div>
 

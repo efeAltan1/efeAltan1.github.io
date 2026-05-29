@@ -32,7 +32,7 @@ export const content = {
   projects: {
     sectionTitle: { en: 'Projects', tr: 'Projeler'           },
     moreSoon:     { en: 'More coming soon', tr: 'Daha fazlası yakında' },
-    demoBtn:      { en: 'See Demo ↗', tr: 'Demo ↗'          },
+    demoBtn:      { en: 'See Demo', tr: 'Demo' },
     items: [
       {
         monogram: 'CHX',
