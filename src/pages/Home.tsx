@@ -1,9 +1,32 @@
+import { Nav }      from '@/components/Nav'
+import { Hero }     from '@/components/Hero'
+import { Projects } from '@/components/Projects'
+import { About }    from '@/components/About'
+import { Contact }  from '@/components/Contact'
+import { Footer }   from '@/components/Footer'
+import { useCustomCursor }   from '@/hooks/useCustomCursor'
+import { useScrollReveal }   from '@/hooks/useScrollReveal'
+import { useScrollProgress } from '@/hooks/useScrollProgress'
+
 export default function Home() {
+  useCustomCursor()
+  useScrollReveal()
+  useScrollProgress()
+
   return (
-    <main>
-      <h1 style={{ color: 'var(--accent)', padding: '2rem' }}>
-        efe.dev — coming soon
-      </h1>
-    </main>
+    <>
+      {/* global overlays */}
+      <div id="scroll-bar" />
+      <div id="spotlight" />
+      <div id="cursor-dot" />
+      <div id="cursor-ring" />
+
+      <Nav />
+      <Hero />
+      <Projects />
+      <About />
+      <Contact />
+      <Footer />
+    </>
   )
 }
